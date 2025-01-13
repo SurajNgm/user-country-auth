@@ -22,7 +22,12 @@ public class CountryService {
 
     public Country updateCountry(Country country){return countryRepository.save(country);}
 
+    public boolean deleteCountry(Long id) {
+        if (countryRepository.existsById(id)) {
+            countryRepository.deleteById(id);
+            return true;
+        }
+        return false;
 
-
-
+    }
 }

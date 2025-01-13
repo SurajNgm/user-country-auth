@@ -4,23 +4,29 @@ import com.example.user.Model.Country;
 import com.example.user.Model.User;
 import com.example.user.Service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class CountryController {
     @Autowired
     private CountryService countryService;
 
-    @PostMapping("/admin/insert")
+    @PostMapping("/user/insert")
     public Country insertCountry(@RequestBody Country country) {
         return countryService.insertCountry(country);
     }
 
-    @PutMapping("/update")
+    @PutMapping("/user/update")
     public Country updateCountry(@RequestBody Country country) {
         return countryService.updateCountry(country);
+    }
+    @DeleteMapping("/user/delete/{id}")
+    public String deleteCountry(@PathVariable Long id) {
+        boolean isDeleted = countryService.deleteCountry(id);
+        if (isDeleted) {
+            return "Country with ID " + id + " deleted successfully.";
+        } else {
+            return "Country with ID " + id + " not found.";
+        }
     }
 }
